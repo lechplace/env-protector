@@ -3,6 +3,17 @@
 `env-protector` to Pythonowa paczka, która ułatwia zarządzanie plikami `.env` w projektach Git. Automatyzuje szyfrowanie i odszyfrowywanie plików `.env` przy użyciu hooków Git, zapewniając bezpieczeństwo poufnych danych.
 
 ---
+## Motywacja
+
+W wielu projektach programistycznych pliki `.env` są używane do przechowywania poufnych informacji, takich jak klucze API, dane logowania do baz danych czy konfiguracje serwisów. Jednak przypadkowe dodanie tych plików do repozytorium Git może prowadzić do poważnych konsekwencji, takich jak wycieki danych czy narażenie infrastruktury na ataki.
+
+**Env Protector** został stworzony, aby:
+- Zapewnić automatyczne zabezpieczanie plików `.env` w procesie pracy z Git.
+- Zminimalizować ryzyko przypadkowego udostępnienia poufnych informacji.
+- Uprościć zarządzanie szyfrowaniem i odszyfrowywaniem plików `.env`, eliminując konieczność ręcznej obsługi.
+- Ułatwić współpracę w zespołach, gdzie każdy członek ma dostęp do tych samych, bezpiecznych konfiguracji.
+
+---
 
 ## Funkcje
 
