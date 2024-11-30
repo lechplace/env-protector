@@ -51,7 +51,7 @@ W projektach programistycznych pliki konfiguracyjne, takie jak `.env`, `config.j
    Plik `.env_protector` powinien zawierać hasło GPG oraz listę plików do szyfrowania:
    ```text
    GPG_PASSWORD=YOURPASS
-   FILES=[.env, config.json, secrets.txt]
+   FILES=['.env', 'config.json', 'secrets.txt']
    ```
 
 2. **Skonfiguruj hooki Git za pomocą komendy `env-protector`:**
