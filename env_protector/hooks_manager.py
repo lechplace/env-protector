@@ -1,6 +1,7 @@
 import os
 import ast  # Do parsowania listy plików w formacie tekstowym
 
+
 class HooksManager:
     def __init__(self, config_file=".env_protector"):
         self.config_file = config_file
@@ -11,8 +12,10 @@ class HooksManager:
     def get_config(self):
         """Odczytaj konfigurację z pliku .env_protector."""
         if not os.path.exists(self.config_file):
-            raise FileNotFoundError(f"Plik konfiguracyjny {self.config_file} nie istnieje.")
-        
+            raise FileNotFoundError(
+                f"Plik konfiguracyjny {self.config_file} nie istnieje."
+            )
+
         config = {}
         with open(self.config_file, "r") as file:
             for line in file:
@@ -90,9 +93,26 @@ fi
         files = config.get("FILES", [])
 
         if not password or not files:
-            raise ValueError("Plik .env_protector musi zawierać klucz GPG_PASSWORD i listę FILES.")
+            raise ValueError(
+                "Plik .env_protector musi zawierać klucz GPG_PASSWORD i listę FILES."
+            )
 
         self.add_to_gitignore(files + [f"{file}.gpg" for file in files])
         self.create_pre_commit_hook(files, password)
         self.create_post_merge_hook(files, password)
         print("Konfiguracja zakończona!")
+
+
+def main():
+    """Funkcja wywoływana z terminala."""
+    print("Rozpoczynanie konfiguracji hooków Git...")
+    try:
+        manager = HooksManager()
+        manager.setup_hooks()
+        print("Hooki Git zostały skonfigurowane pomyślnie!")
+    except Exception as e:
+        print(f"Wystąpił błąd: {e}")
+
+
+if __name__ == "__main__":
+    main()

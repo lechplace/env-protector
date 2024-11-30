@@ -87,3 +87,8 @@ Thumbs.db
 # Ignoruj foldery zależności systemowych
 site/
 node_modules/
+config.json
+secrets.txt
+.env.gpg
+config.json.gpg
+secrets.txt.gpg
