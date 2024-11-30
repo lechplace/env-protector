@@ -1,27 +1,28 @@
 # Env Protector
 
-`env-protector` to Pythonowa paczka, która ułatwia zarządzanie plikami `.env` w projektach Git. Automatyzuje szyfrowanie i odszyfrowywanie plików `.env` przy użyciu hooków Git, zapewniając bezpieczeństwo poufnych danych.
+`env-protector` to Pythonowa paczka, która ułatwia zarządzanie plikami konfiguracyjnymi, takimi jak `.env`, w projektach Git. Automatyzuje szyfrowanie i odszyfrowywanie wielu plików przy użyciu hooków Git, zapewniając bezpieczeństwo poufnych danych.
 
 ---
+
 ## Motywacja
 
-W wielu projektach programistycznych pliki `.env` są używane do przechowywania poufnych informacji, takich jak klucze API, dane logowania do baz danych czy konfiguracje serwisów. Jednak przypadkowe dodanie tych plików do repozytorium Git może prowadzić do poważnych konsekwencji, takich jak wycieki danych czy narażenie infrastruktury na ataki.
+W projektach programistycznych pliki konfiguracyjne, takie jak `.env`, `config.json` czy `secrets.txt`, często zawierają poufne informacje. Ich przypadkowe dodanie do repozytorium może prowadzić do wycieków danych. 
 
 **Env Protector** został stworzony, aby:
-- Zapewnić automatyczne zabezpieczanie plików `.env` w procesie pracy z Git.
-- Zminimalizować ryzyko przypadkowego udostępnienia poufnych informacji.
-- Uprościć zarządzanie szyfrowaniem i odszyfrowywaniem plików `.env`, eliminując konieczność ręcznej obsługi.
-- Ułatwić współpracę w zespołach, gdzie każdy członek ma dostęp do tych samych, bezpiecznych konfiguracji.
+- Ułatwić zarządzanie wieloma plikami konfiguracyjnymi w sposób bezpieczny.
+- Zapobiec przypadkowemu udostępnieniu poufnych informacji.
+- Uprościć proces szyfrowania i odszyfrowywania, eliminując potrzebę ręcznej obsługi.
+- Zautomatyzować procesy przy użyciu hooków Git.
 
 ---
 
 ## Funkcje
 
-- **Automatyczne szyfrowanie plików `.env`** przy każdym `git commit`.
-- **Automatyczne odszyfrowywanie plików `.env`** po `git pull` lub `git merge`.
-- Obsługa plików `.env.gpg` przy użyciu GPG (`GNU Privacy Guard`).
-- Odczyt hasła GPG z pliku `.env_protector`.
-- Dodawanie plików `.env` i `.env_protector` do `.gitignore`.
+- **Automatyczne szyfrowanie wielu plików** przy każdym `git commit`.
+- **Automatyczne odszyfrowywanie wielu plików** po `git pull` lub `git merge`.
+- Obsługa plików `.gpg` przy użyciu GPG (`GNU Privacy Guard`).
+- Odczyt hasła GPG i listy plików do szyfrowania z pliku `.env_protector`.
+- Automatyczne dodawanie plików konfiguracyjnych do `.gitignore`.
 - **Komenda systemowa `env-protector`** do łatwego konfigurowania hooków.
 
 ---
@@ -43,39 +44,48 @@ W wielu projektach programistycznych pliki `.env` są używane do przechowywania
 
 ---
 
-## Użycie
+## Konfiguracja
 
-1. **Utwórz plik `.env_protector` z hasłem GPG:**
-   ```bash
-   echo "GPG_PASSWORD=YOURPASS" > .env_protector
+1. **Utwórz plik `.env_protector`:**
+
+   Plik `.env_protector` powinien zawierać hasło GPG oraz listę plików do szyfrowania:
+   ```text
+   GPG_PASSWORD=YOURPASS
+   FILES=[.env, config.json, secrets.txt]
    ```
 
 2. **Skonfiguruj hooki Git za pomocą komendy `env-protector`:**
+
    W terminalu, w katalogu swojego projektu, wykonaj:
    ```bash
    env-protector
    ```
 
    Komenda ta automatycznie:
-   - Dodaje `.env` i `.env_protector` do `.gitignore`.
+   - Dodaje wymienione pliki oraz ich zaszyfrowane wersje (`.gpg`) do `.gitignore`.
    - Tworzy hooki `pre-commit` i `post-merge`.
 
-3. **Dodaj plik `.env` do repozytorium:**
-   - Utwórz plik `.env` z konfiguracjami:
-     ```text
-     API_KEY=123456
-     SECRET_KEY=my_secret_key
-     ```
-   - Dodaj plik `.env` do repozytorium:
+---
+
+## Użycie
+
+1. **Dodaj pliki do repozytorium:**
+   - Utwórz pliki konfiguracyjne, które chcesz zabezpieczyć:
      ```bash
-     git add .env
-     git commit -m "Dodano plik .env"
+     echo "API_KEY=123456" > .env
+     echo '{"key": "value"}' > config.json
+     echo "SECRET=abcd" > secrets.txt
+     ```
+   - Dodaj pliki do repozytorium:
+     ```bash
+     git add .env config.json secrets.txt
+     git commit -m "Szyfrowanie plików"
      ```
 
-   Plik `.env` zostanie automatycznie zaszyfrowany jako `.env.gpg`.
+   Pliki zostaną automatycznie zaszyfrowane jako `.gpg`.
 
-4. **Odszyfrowanie pliku `.env`:**
-   Po wykonaniu `git pull` lub `git merge` plik `.env.gpg` zostanie automatycznie odszyfrowany.
+2. **Odszyfrowanie plików:**
+   Po wykonaniu `git pull` lub `git merge` zaszyfrowane pliki `.gpg` zostaną automatycznie odszyfrowane do ich oryginalnych wersji.
 
 ---
 
@@ -89,27 +99,27 @@ W wielu projektach programistycznych pliki `.env` są używane do przechowywania
    Wyjście w terminalu:
    ```text
    Konfigurowanie hooków Git...
-   Dodano .env do .gitignore.
-   Dodano .env_protector do .gitignore.
+   Dodano .env, config.json, secrets.txt do .gitignore.
+   Dodano .env.gpg, config.json.gpg, secrets.txt.gpg do .gitignore.
    Utworzono hook Git: .git/hooks/pre-commit
    Utworzono hook Git: .git/hooks/post-merge
    Konfiguracja zakończona!
    ```
 
-2. **Dodawanie i szyfrowanie pliku `.env`:**
+2. **Dodawanie i szyfrowanie plików:**
    ```bash
    echo "API_KEY=example_key" > .env
    git add .env
    git commit -m "Szyfrowanie pliku .env"
    ```
 
-3. **Odszyfrowanie pliku `.env`:**
+3. **Odszyfrowanie plików:**
    Po wykonaniu `git pull`:
    ```text
    Rozszyfrowywanie pliku .env.gpg...
-   Plik .env został rozszyfrowany.
+   Rozszyfrowywanie pliku config.json.gpg...
+   Rozszyfrowywanie pliku secrets.txt.gpg...
    ```
-
 ---
 
 ## Wymagania

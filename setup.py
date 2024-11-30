@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="env-protector",
-    version="0.1.0",
+    version="0.2.0",
     description="Package for managing Git hooks to encrypt and decrypt .env files.",
     long_description="Package for secure .env file management in Git.",
     long_description_content_type="text/markdown",
