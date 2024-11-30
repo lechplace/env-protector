@@ -1,0 +1,90 @@
+env_protector
+env_protector.egg-info
+dist
+build
+.env
+# Zbędne pliki Pythona
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Pliki środowisk wirtualnych
+.venv
+env/
+venv/
+ENV/
+venv.bak/
+*.env
+
+# Pliki konfiguracyjne środowiska
+*.env
+*.env.gpg
+
+# Pliki zależności
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Foldery i pliki generowane przez narzędzia
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+*.whl
+.installed.cfg
+
+# Pliki wygenerowane przez pytest
+.cache/
+pytestdebug.log
+
+# Pliki IDE i edytorów
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+
+# Pliki generowane przez testy i pokrycie kodu
+.coverage
+.tox/
+.nox/
+*.cover
+htmlcov/
+.coverage.*
+
+# Pliki tymczasowe i kopie zapasowe
+*.bak
+*.tmp
+*.log
+*.orig
+*.rej
+*.sublime-workspace
+*.sublime-project
+
+# Pliki bazy danych SQLite
+*.sqlite3
+
+# Ignoruj profile linters
+.mypy_cache/
+pylint.log
+flake8.log
+
+# Ignoruj pliki Dockerowe
+.dockerignore
+docker-compose.override.yml
+
+# Ignoruj pliki systemowe
+.DS_Store
+Thumbs.db
+
+# Ignoruj klucze SSH
+*.pem
+
+# Ignoruj notebooki Jupyter, jeśli zawierają dane tymczasowe
+.ipynb_checkpoints/
+
+# Ignoruj foldery zależności systemowych
+site/
+node_modules/
